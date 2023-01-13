@@ -1,8 +1,9 @@
-import discord
 from discord.ext import commands
 from chatgpt_wrapper.chatgpt import ChatGPT
 from chatgpt_wrapper.utils.exceptions import ChatGPTError
 from bot import DiscordBot
+
+LENGTH: int = 1980
 
 
 class ChatGPTCog(commands.Cog):
@@ -28,6 +29,13 @@ class ChatGPTCog(commands.Cog):
         else:
             return res
 
+    async def split(
+        self, ctx: commands.Context, res: str, _type: str | None = None
+    ) -> None:
+        splitted: list[str] = [res[:LENGTH], res[LENGTH:]]
+        for text in splitted:
+            await ctx.message.reply(f"```{_type if _type else ''}{text}```")
+
     @commands.command(name="code")
     async def code(self, ctx: commands.Context, _type: str, *, prompt: str) -> None:
         """Ask ChatGPT to produce code.
@@ -39,10 +47,10 @@ class ChatGPTCog(commands.Cog):
         """
 
         res: str = await self._call(ctx, prompt)
-        msg: discord.Embed = await self.bot.create_embed(
-            "ChatGPT Response", f"```{_type}\n{res}```"
-        )
-        await ctx.message.reply(embed=msg)
+        if len(res) > 2000:
+            await self.split(ctx, res, _type)
+        else:
+            await ctx.message.reply(f"```{_type}\n{res}```")
 
     @commands.command(name="ask")
     async def ask(self, ctx: commands.Context, *, prompt: str) -> None:
@@ -54,7 +62,7 @@ class ChatGPTCog(commands.Cog):
         """
 
         res: str = await self._call(ctx, prompt)
-        msg: discord.Embed = await self.bot.create_embed(
-            "ChatGPT Response", f"```{res}```"
-        )
-        await ctx.message.reply(embed=msg)
+        if len(res) > 2000:
+            await self.split(ctx, res)
+        else:
+            await ctx.message.reply(f"```{res}```")

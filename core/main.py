@@ -7,6 +7,7 @@ from bot import DiscordBot
 from cogs.chatgpt_cog import ChatGPTCog
 from cogs.utils_cog import UtilsCog
 
+load_dotenv()
 COGS: list[commands.Cog] = [ChatGPTCog, UtilsCog]
 
 
@@ -26,6 +27,5 @@ async def main() -> commands.Bot:
 
 
 if __name__ == "__main__":
-    load_dotenv()
     client: DiscordBot = asyncio.run(main())
     client.run(os.getenv("KEY", ""))
