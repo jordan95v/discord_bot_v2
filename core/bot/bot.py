@@ -8,7 +8,7 @@ class DiscordBot(commands.Bot):
 
         print(f"Logged on as {self.user}!")
 
-    async def create_embed(self, value: str) -> discord.Embed:
+    async def create_embed(self, name: str, value: str) -> discord.Embed:
         """Create an embed message.
 
         Args:
@@ -19,6 +19,6 @@ class DiscordBot(commands.Bot):
         """
 
         output: discord.Embed = discord.Embed(color=discord.Color.purple())
-        output.set_author(name="ChatGPT Response")
+        output.set_author(name=name)
         output.add_field(name="", value=value)
         return output

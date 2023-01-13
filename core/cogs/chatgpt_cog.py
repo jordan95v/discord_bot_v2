@@ -39,7 +39,9 @@ class ChatGPTCog(commands.Cog):
         """
 
         res: str = await self._call(ctx, prompt)
-        msg: discord.Embed = await self.bot.create_embed(f"```{_type}\n{res}```")
+        msg: discord.Embed = await self.bot.create_embed(
+            "ChatGPT Response", f"```{_type}\n{res}```"
+        )
         await ctx.message.reply(embed=msg)
 
     @commands.command(name="ask")
@@ -52,5 +54,7 @@ class ChatGPTCog(commands.Cog):
         """
 
         res: str = await self._call(ctx, prompt)
-        msg: discord.Embed = await self.bot.create_embed(f"```{res}```")
+        msg: discord.Embed = await self.bot.create_embed(
+            "ChatGPT Response", f"```{res}```"
+        )
         await ctx.message.reply(embed=msg)

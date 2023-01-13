@@ -17,8 +17,11 @@ class UtilsCog(commands.Cog):
             n (int): The number of messages to delete.
         """
 
-        await ctx.channel.purge(limit=n + 1)
-        msg: discord.Embed = await self.bot.create_embed(f"Deleted {n} messages !")
+        limit: int = n + 1
+        await ctx.channel.purge(limit=limit)
+        msg: discord.Embed = await self.bot.create_embed(
+            "Delete command", f"Deleted {n} messages !"
+        )
         await ctx.send(embed=msg)
 
     @commands.command(name="help")
