@@ -6,11 +6,9 @@ from bot import DiscordBot
 
 
 class ChatGPTCog(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot, api_key: str):
         self.bot: DiscordBot = bot
-        self.client: ChatGPT = ChatGPT(
-            "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"
-        )
+        self.client: ChatGPT = ChatGPT(api_key)
 
     async def _call(self, ctx: commands.Context, prompt: str) -> str:
         """Call the ChatGPT API.
