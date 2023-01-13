@@ -32,6 +32,14 @@ class ChatGPTCog(commands.Cog):
     async def split(
         self, ctx: commands.Context, res: str, _type: str | None = None
     ) -> None:
+        """Split the string in half.
+
+        Args:
+            ctx (commands.Context): The context.
+            res (str): The API response.
+            _type (str | None, optional): If it's code, then it's the langage. Defaults to None.
+        """
+
         splitted: list[str] = [res[:LENGTH], res[LENGTH:]]
         for text in splitted:
             await ctx.message.reply(f"```{_type if _type else ''}{text}```")

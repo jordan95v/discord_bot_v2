@@ -8,6 +8,20 @@ class DiscordBot(commands.Bot):
 
         print(f"Logged on as {self.user}!")
 
+    async def on_command_error(
+        self, ctx: commands.Context, exception: commands.errors.CommandError
+    ) -> None:
+        """Send a message when an erro occur.
+
+        Args:
+            ctx (commands.Context): The context.
+            exception (commands.errors.CommandError): The exception.
+        """
+
+        print(exception)
+        msg: discord.Embed = await self.create_embed("Error", exception)
+        await ctx.message.reply(embed=msg)
+
     async def create_embed(self, name: str, value: str) -> discord.Embed:
         """Create an embed message.
 
