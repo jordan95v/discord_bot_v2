@@ -41,3 +41,15 @@ class UtilsCog(commands.Cog):
             message.add_field(name=element["name"], value=element["value"])
 
         await ctx.send(embed=message)
+
+    @commands.command(name="say")
+    async def say(self, ctx: commands.Context, *, text: str) -> None:
+        """Make the bot say something.
+
+        Args:
+            ctx (commands.Context): The context.
+            text (str): The text the bot is gonna say.
+        """
+
+        await ctx.message.delete()
+        await ctx.send(text)
