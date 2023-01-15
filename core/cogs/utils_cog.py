@@ -1,3 +1,4 @@
+import random
 from discord.ext import commands
 import discord
 from bot import DiscordBot
@@ -53,3 +54,18 @@ class UtilsCog(commands.Cog):
 
         await ctx.message.delete()
         await ctx.send(text)
+
+    @commands.command(name="rand")
+    async def rand(self, ctx: commands.Context, *, number: int) -> None:
+        """Choose a random number.
+
+        Args:
+            ctx (commands.Context): The context.
+            number (int): The maximum number to rand.
+        """
+
+        n: int = random.randint(1, number)
+        msg: discord.Embed = await self.bot.create_embed(
+            f"Rand {number}", f"Result: {n}"
+        )
+        await ctx.message.reply(embed=msg)
