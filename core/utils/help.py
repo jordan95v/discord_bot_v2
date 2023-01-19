@@ -9,7 +9,7 @@ HELP: tuple[dict[str, str], ...] = (
     ),
     dict(
         name="!generate `<n>` `<prompt>`",
-        value="Make ChatGPT generate images.",
+        value="Make ChatGPT generate `n` images.",
     ),
     dict(
         name="!del `<n>`",
@@ -24,7 +24,7 @@ HELP: tuple[dict[str, str], ...] = (
         value="Make the bot rand a number up to **n**.",
     ),
     dict(
-        name="!choice `<question>`",
+        name="!question `<question>`",
         value="Make the bot randomly answer a question.",
     ),
 )
