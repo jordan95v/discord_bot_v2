@@ -34,15 +34,15 @@ class DiscordBot(commands.Bot):
                 "Permission error",
                 "You don't have the permission to do that.",
             )
-        elif isinstance(error.original, ChatGPTError):
-            msg = await self.create_embed(
-                "ChatGPT error",
-                "Error with ChatGPT, check if hwat you asked respect ChatGPT policy.",
-            )
         elif isinstance(error, commands.errors.BadArgument):
             msg = await self.create_embed(
                 "Bad arguments",
                 "Please refer to the help commands to check arguments",
+            )
+        elif isinstance(error.original, ChatGPTError):
+            msg = await self.create_embed(
+                "ChatGPT error",
+                "Error with ChatGPT, check if hwat you asked respect ChatGPT policy.",
             )
         else:
             msg = await self.create_embed("Error", error)
