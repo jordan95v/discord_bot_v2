@@ -12,6 +12,7 @@ class UtilsCog(commands.Cog):
         self.bot: DiscordBot = bot
 
     @commands.command(name="del")
+    @commands.has_permissions(manage_messages=True)
     async def delete(self, ctx: commands.Context, n: int) -> None:
         """Delete n messages from a channel.
 
@@ -71,3 +72,23 @@ class UtilsCog(commands.Cog):
             f"Rand {number}", f"Result: {n}"
         )
         await ctx.message.reply(embed=msg)
+
+    @commands.command(name="question")
+    async def question(self, ctx: commands.Context, *, question) -> None:
+        """Make the bot answer a question."""
+
+        choices: list[str] = [
+            "Yes.",
+            "Clearly.",
+            "Definitely.",
+            "Without a doubt.",
+            "No.",
+            "Not at all.",
+            "Nope.",
+            "This is false.",
+        ]
+
+        message: discord.Embed = await self.bot.create_embed(
+            question, random.choice(choices)
+        )
+        await ctx.message.reply(embed=message)
