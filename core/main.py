@@ -16,10 +16,11 @@ async def main() -> commands.Bot:
     intents.members = True
 
     client: DiscordBot = DiscordBot(
-        intents=intents, command_prefix="$", help_command=None
+        intents=intents, command_prefix="!", help_command=None
     )
 
-    await client.add_cog(ChatGPTCog(client, os.getenv("API_KEY", "")))
+    api_key: str = os.getenv("API_KEY", "")
+    await client.add_cog(ChatGPTCog(client, api_key))
     await client.add_cog(UtilsCog(client))
 
     return client

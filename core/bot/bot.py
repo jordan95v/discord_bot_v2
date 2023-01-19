@@ -39,10 +39,10 @@ class DiscordBot(commands.Bot):
                 "Bad arguments",
                 "Please refer to the help commands to check arguments",
             )
-        elif isinstance(error.original, ChatGPTError):
+        elif isinstance(getattr(error, "original", "None"), ChatGPTError):
             msg = await self.create_embed(
                 "ChatGPT error",
-                "Error with ChatGPT, check if hwat you asked respect ChatGPT policy.",
+                "Error with ChatGPT, check if what you asked respect ChatGPT policy.",
             )
         else:
             msg = await self.create_embed("Error", error)
