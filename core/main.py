@@ -16,8 +16,9 @@ async def main() -> commands.Bot:
     intents.message_content = True
     intents.members = True
 
+    command_prefix: str = os.getenv("COMMAND_PREFIX", "!")
     client: DiscordBot = DiscordBot(
-        intents=intents, command_prefix="$", help_command=None
+        intents=intents, command_prefix=command_prefix, help_command=None
     )
 
     api_key: str = os.getenv("API_KEY", "")
@@ -32,4 +33,5 @@ async def main() -> commands.Bot:
 if __name__ == "__main__":
     load_dotenv()
     client: DiscordBot = asyncio.run(main())
-    client.run(os.getenv("KEY", ""))
+    discord_key: str = os.getenv("DISCORD_KEY", "")
+    client.run(discord_key)
