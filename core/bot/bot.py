@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from utils.help import HELP
 
 __all__: list[str] = ["DiscordBot"]
 
@@ -11,7 +12,7 @@ class DiscordBot(commands.Bot):
         print(f"Logged on as {self.user}!")
 
     async def on_command_error(
-        self, ctx: commands.Context, exception: commands.errors.CommandError
+        self, ctx: commands.Context, error: commands.errors.CommandError
     ) -> None:
         """Send a message when an erro occur.
 
@@ -20,8 +21,22 @@ class DiscordBot(commands.Bot):
             exception (commands.errors.CommandError): The exception.
         """
 
-        print(exception)
-        msg: discord.Embed = await self.create_embed("Error", exception)
+        print(error)
+        msg: discord.Embed
+
+        if isinstance(error, commands.errors.MissingRequiredArgument):
+            msg = await self.create_embed(
+                "Arguments missing",
+                "You need to give me an arguments !",
+            )
+        elif isinstance(error, commands.errors.MissingPermissions):
+            msg = await self.create_embed(
+                "Permission error",
+                "You don't have the permission to do that.",
+            )
+        else:
+            msg = await self.create_embed("Error", error)
+
         await ctx.message.reply(embed=msg)
 
     async def create_embed(self, name: str, value: str) -> discord.Embed:
