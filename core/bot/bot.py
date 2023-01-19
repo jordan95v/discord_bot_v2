@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+__all__: list[str] = ["DiscordBot"]
+
 
 class DiscordBot(commands.Bot):
     async def on_ready(self):

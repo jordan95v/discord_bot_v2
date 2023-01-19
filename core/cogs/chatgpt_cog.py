@@ -1,7 +1,8 @@
-from discord.ext import commands
-from chatgpt_wrapper.chatgpt import ChatGPT
-from chatgpt_wrapper.utils.exceptions import ChatGPTError
 from bot import DiscordBot
+from discord.ext import commands
+from utils.chatgpt import ChatGPT, ChatGPTError
+
+__all__: list[str] = ["ChatGPTCog"]
 
 LENGTH: int = 1980
 

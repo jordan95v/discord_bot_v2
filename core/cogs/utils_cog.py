@@ -1,8 +1,10 @@
 import random
-from discord.ext import commands
 import discord
 from bot import DiscordBot
+from discord.ext import commands
 from utils.help import HELP
+
+__all__: list[str] = ["UtilsCog"]
 
 
 class UtilsCog(commands.Cog):

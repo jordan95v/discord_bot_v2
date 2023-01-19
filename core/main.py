@@ -1,11 +1,11 @@
 import asyncio
-import discord
 import os
-from discord.ext import commands
-from dotenv import load_dotenv
+import discord
 from bot import DiscordBot
 from cogs.chatgpt_cog import ChatGPTCog
 from cogs.utils_cog import UtilsCog
+from discord.ext import commands
+from dotenv import load_dotenv
 
 COGS: list[commands.Cog] = [ChatGPTCog, UtilsCog]
 
@@ -16,7 +16,7 @@ async def main() -> commands.Bot:
     intents.members = True
 
     client: DiscordBot = DiscordBot(
-        intents=intents, command_prefix="!", help_command=None
+        intents=intents, command_prefix="$", help_command=None
     )
 
     await client.add_cog(ChatGPTCog(client, os.getenv("API_KEY", "")))
