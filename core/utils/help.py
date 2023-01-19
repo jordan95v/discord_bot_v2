@@ -27,4 +27,12 @@ HELP: tuple[dict[str, str], ...] = (
         name="!question `<question>`",
         value="Make the bot randomly answer a question.",
     ),
+    dict(
+        name="!top `<sub>` `<n>`",
+        value="Scrape **n** top images from a subreddit **sub**.",
+    ),
+    dict(
+        name="!hot `<sub>` `<n>`",
+        value="Scrape **n** hot images from a subreddit **sub**.",
+    ),
 )

@@ -4,10 +4,11 @@ import discord
 from bot import DiscordBot
 from cogs.chatgpt_cog import ChatGPTCog
 from cogs.utils_cog import UtilsCog
+from cogs.reddit_cog import RedditCog
 from discord.ext import commands
 from dotenv import load_dotenv
 
-COGS: list[commands.Cog] = [ChatGPTCog, UtilsCog]
+COGS: list[commands.Cog] = [RedditCog, UtilsCog]
 
 
 async def main() -> commands.Bot:
@@ -16,12 +17,14 @@ async def main() -> commands.Bot:
     intents.members = True
 
     client: DiscordBot = DiscordBot(
-        intents=intents, command_prefix="!", help_command=None
+        intents=intents, command_prefix="$", help_command=None
     )
 
     api_key: str = os.getenv("API_KEY", "")
     await client.add_cog(ChatGPTCog(client, api_key))
-    await client.add_cog(UtilsCog(client))
+
+    for cog in COGS:
+        await client.add_cog(cog(client))
 
     return client
 
