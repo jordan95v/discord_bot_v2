@@ -29,10 +29,10 @@ HELP: tuple[dict[str, str], ...] = (
     ),
     dict(
         name="!top `<sub>` `<n>`",
-        value="Scrape **n** top images from a subreddit **sub**.",
+        value="Scrape **n** top posts content from a subreddit **sub**.",
     ),
     dict(
         name="!hot `<sub>` `<n>`",
-        value="Scrape **n** hot images from a subreddit **sub**.",
+        value="Scrape **n** trending content from a subreddit **sub**.",
     ),
 )
