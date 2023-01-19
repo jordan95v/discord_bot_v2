@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from utils.help import HELP
+from utils.chatgpt import ChatGPTError
 
 __all__: list[str] = ["DiscordBot"]
 
@@ -21,7 +22,6 @@ class DiscordBot(commands.Bot):
             exception (commands.errors.CommandError): The exception.
         """
 
-        print(error)
         msg: discord.Embed
 
         if isinstance(error, commands.errors.MissingRequiredArgument):
@@ -33,6 +33,16 @@ class DiscordBot(commands.Bot):
             msg = await self.create_embed(
                 "Permission error",
                 "You don't have the permission to do that.",
+            )
+        elif isinstance(error.original, ChatGPTError):
+            msg = await self.create_embed(
+                "ChatGPT error",
+                "Error with ChatGPT, check if hwat you asked respect ChatGPT policy.",
+            )
+        elif isinstance(error, commands.errors.BadArgument):
+            msg = await self.create_embed(
+                "Bad arguments",
+                "Please refer to the help commands to check arguments",
             )
         else:
             msg = await self.create_embed("Error", error)

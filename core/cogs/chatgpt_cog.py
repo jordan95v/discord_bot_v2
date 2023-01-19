@@ -12,24 +12,6 @@ class ChatGPTCog(commands.Cog):
         self.bot: DiscordBot = bot
         self.client: ChatGPT = ChatGPT(api_key)
 
-    async def _call(self, ctx: commands.Context, prompt: str) -> str:
-        """Call the ChatGPT API.
-
-        Args:
-            ctx (commands.Context): The context.
-            prompt (str): The question to ask.
-
-        Returns:
-            str: The response from the API.
-        """
-
-        try:
-            res: str = await self.client.completion(prompt=prompt)
-        except ChatGPTError:
-            await ctx.message.reply("Error with ChatGPT. Try later.")
-        else:
-            return res
-
     async def split(
         self, ctx: commands.Context, res: str, _type: str | None = None
     ) -> None:
@@ -43,7 +25,8 @@ class ChatGPTCog(commands.Cog):
 
         splitted: list[str] = [res[:LENGTH], res[LENGTH:]]
         for text in splitted:
-            await ctx.message.reply(f"```{_type if _type else ''}{text}```")
+            type_fmt: str = f"{_type}\n" if _type else ""
+            await ctx.message.reply(f"```{type_fmt}{text}```")
 
     @commands.command(name="code")
     async def code(self, ctx: commands.Context, _type: str, *, prompt: str) -> None:
@@ -55,7 +38,8 @@ class ChatGPTCog(commands.Cog):
             prompt (str): The question.
         """
 
-        res: str = await self._call(ctx, prompt)
+        res: str = await self.client.completion(prompt=prompt)
+        res = res.replace("```", "")
         if len(res) > 2000:
             await self.split(ctx, res, _type)
         else:
@@ -70,8 +54,17 @@ class ChatGPTCog(commands.Cog):
             prompt (str): The question.
         """
 
-        res: str = await self._call(ctx, prompt)
+        res: str = await self.client.completion(prompt=prompt)
         if len(res) > 2000:
             await self.split(ctx, res)
         else:
             await ctx.message.reply(f"```{res}```")
+
+    @commands.command(name="generate")
+    async def generate_images(
+        self, ctx: commands.Context, n: int, *, prompt: str
+    ) -> None:
+        res: list[str] = await self.client.generate_images(prompt, n)
+
+        for url in res:
+            await ctx.message.reply(url)

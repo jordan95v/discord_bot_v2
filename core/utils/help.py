@@ -8,6 +8,10 @@ HELP: tuple[dict[str, str], ...] = (
         value="Ask ChatGPT to code, **langage** is the for exemple python or c.",
     ),
     dict(
+        name="!generate `<n>` `<prompt>`",
+        value="Make ChatGPT generate images.",
+    ),
+    dict(
         name="!del `<n>`",
         value="Delete **n** messages from the channel.",
     ),
@@ -18,5 +22,9 @@ HELP: tuple[dict[str, str], ...] = (
     dict(
         name="!rand `<n>`",
         value="Make the bot rand a number up to **n**.",
+    ),
+    dict(
+        name="!choice `<question>`",
+        value="Make the bot randomly answer a question.",
     ),
 )
